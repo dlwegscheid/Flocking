@@ -22,7 +22,7 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight="1"
+            android:layout_weight=".75"
             android:baselineAligned="false"
             android:id="@+id/BananaSwallow">
 
@@ -33,12 +33,13 @@
                 android:layout_weight="1"
                 android:layout_margin="10dp">
 
-                <RadioButton
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/swallow"
-                    android:id="@+id/SwallowSelect"
-                    android:layout_gravity="center_vertical|left" />
+                    android:id="@+id/SwallowText"
+                    android:layout_gravity="left|center_vertical" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -46,8 +47,7 @@
                     android:id="@+id/swallow"
                     android:src="@drawable/swallow"
                     android:contentDescription="@string/swallow"
-                    android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="10dp" />
+                    android:layout_gravity="right|center_vertical" />
 
             </FrameLayout>
 
@@ -58,11 +58,12 @@
                 android:layout_weight="1"
                 android:layout_margin="10dp">
 
-                <RadioButton
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/bananaquit"
-                    android:id="@+id/SelectBanana"
+                    android:id="@+id/BananaText"
                     android:layout_gravity="left|center_vertical" />
 
                 <ImageView
@@ -73,36 +74,8 @@
                     android:contentDescription="@string/bananaquit"
                     android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="10dp" />
+
             </FrameLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:id="@+id/Ostrich">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/ostrich"
-                android:src="@drawable/ostrich"
-                android:contentDescription="@string/ostrich" />
-
-            <RadioButton
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:text="@string/ostrich"
-                android:id="@+id/SelectOstrich" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:id="@+id/RobinParrot">
 
             <FrameLayout
                 android:layout_width="fill_parent"
@@ -111,12 +84,14 @@
                 android:layout_weight="1"
                 android:layout_margin="10dp">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/SelectRobin"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/robin"
-                    android:layout_gravity="center|left" />
+                    android:id="@+id/RobinText"
+                    android:textStyle="bold"
+                    android:layout_gravity="left|center_vertical" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -124,7 +99,7 @@
                     android:id="@+id/robin"
                     android:src="@drawable/robin"
                     android:contentDescription="@string/robin"
-                    android:layout_gravity="center|right"
+                    android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="10dp" />
             </FrameLayout>
 
@@ -135,23 +110,98 @@
                 android:layout_weight="1"
                 android:layout_margin="10dp">
 
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/parrot"
-                    android:id="@+id/SelectParrot"
-                    android:layout_gravity="center_vertical|left" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/parrot"
                     android:src="@drawable/parrot"
                     android:contentDescription="@string/parrot"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="center|right" />
+                    android:layout_gravity="right|center_vertical" />
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/ParrotText"
+                    android:textStyle="bold"
+                    android:gravity="center_vertical|center_horizontal|left"
+                    android:text="@string/parrot"
+                    android:layout_gravity="left|center_vertical" />
             </FrameLayout>
         </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:id="@+id/Ostrich"
+            android:layout_margin="10dp"
+            android:visibility="visible"
+            android:layout_weight=".75">
+
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/ostrich"
+                    android:id="@+id/OstrichText"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal|top" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/ostrich"
+                    android:src="@drawable/ostrich"
+                    android:contentDescription="@string/ostrich"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp" />
+            </FrameLayout>
+
+        </LinearLayout>
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/BirdRadioGroup">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/RadioSelectRobin"
+                android:text="@string/robin" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/parrot"
+                android:id="@+id/RadioSelectParrot" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/swallow"
+                android:id="@+id/RadioSelectSwallow" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/bananaquit"
+                android:id="@+id/RadioSelectBanana" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ostrich"
+                android:id="@+id/RadioSelectOstrich" />
+
+        </RadioGroup>
 
     </LinearLayout>
 
