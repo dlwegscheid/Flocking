@@ -12,5 +12,6 @@
     <string name="robin">Robin</string>
     <string name="swallow">Swallow</string>
     <string name="selectBird">Select your bird</string>
+    <string name="title_activity_game">GameActivity</string>
 
 </resources>
