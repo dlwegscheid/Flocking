@@ -13,5 +13,8 @@
     <string name="swallow">Swallow</string>
     <string name="selectBird">Select your bird</string>
     <string name="title_activity_game">GameActivity</string>
+    <string name="player_one">Player 1: </string>
+    <string name="player_two">Player 2: </string>
+    <string name="input_name">Your Name Here</string>
 
 </resources>
