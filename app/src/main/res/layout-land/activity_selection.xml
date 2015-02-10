@@ -39,7 +39,9 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/swallow"
                     android:id="@+id/SwallowText"
-                    android:layout_gravity="left|center_vertical" />
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="25dp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -47,7 +49,9 @@
                     android:id="@+id/swallow"
                     android:src="@drawable/swallow"
                     android:contentDescription="@string/swallow"
-                    android:layout_gravity="right|center_vertical" />
+                    android:layout_gravity="right|center_vertical"
+                    android:onClick="imageClicked"
+                    android:clickable="true" />
 
             </FrameLayout>
 
@@ -64,7 +68,9 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/bananaquit"
                     android:id="@+id/BananaText"
-                    android:layout_gravity="left|center_vertical" />
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="25dp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -73,7 +79,9 @@
                     android:src="@drawable/bananaquit"
                     android:contentDescription="@string/bananaquit"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:onClick="imageClicked"
+                    android:clickable="true" />
 
             </FrameLayout>
 
@@ -91,7 +99,8 @@
                     android:text="@string/robin"
                     android:id="@+id/RobinText"
                     android:textStyle="bold"
-                    android:layout_gravity="left|center_vertical" />
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="25dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -100,7 +109,9 @@
                     android:src="@drawable/robin"
                     android:contentDescription="@string/robin"
                     android:layout_gravity="right|center_vertical"
-                    android:layout_marginRight="10dp" />
+                    android:layout_marginRight="10dp"
+                    android:onClick="imageClicked"
+                    android:clickable="true" />
             </FrameLayout>
 
             <FrameLayout
@@ -116,7 +127,9 @@
                     android:id="@+id/parrot"
                     android:src="@drawable/parrot"
                     android:contentDescription="@string/parrot"
-                    android:layout_gravity="right|center_vertical" />
+                    android:layout_gravity="right|center_vertical"
+                    android:onClick="imageClicked"
+                    android:clickable="true" />
 
                 <TextView
                     android:layout_width="fill_parent"
@@ -126,7 +139,8 @@
                     android:textStyle="bold"
                     android:gravity="center_vertical|center_horizontal|left"
                     android:text="@string/parrot"
-                    android:layout_gravity="left|center_vertical" />
+                    android:layout_gravity="left|center_vertical"
+                    android:layout_marginLeft="25dp" />
             </FrameLayout>
         </LinearLayout>
 
@@ -159,49 +173,12 @@
                     android:src="@drawable/ostrich"
                     android:contentDescription="@string/ostrich"
                     android:layout_gravity="center"
-                    android:layout_margin="15dp" />
+                    android:layout_margin="15dp"
+                    android:onClick="imageClicked"
+                    android:clickable="true" />
             </FrameLayout>
 
         </LinearLayout>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight=".25"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/BirdRadioGroup">
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/RadioSelectRobin"
-                android:text="@string/robin" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/parrot"
-                android:id="@+id/RadioSelectParrot" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/swallow"
-                android:id="@+id/RadioSelectSwallow" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/bananaquit"
-                android:id="@+id/RadioSelectBanana" />
-
-            <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/ostrich"
-                android:id="@+id/RadioSelectOstrich" />
-
-        </RadioGroup>
 
     </LinearLayout>
 

@@ -1,25 +1,25 @@
 package edu.msu.wegschei.flocking;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.ImageView;
+//import android.widget.Toast;
 
 
 public class SelectionActivity extends ActionBarActivity {
 
-    private RadioGroup radioBirdGroup; //group of bird radio buttons
-    private RadioButton radioBirdButton; //bird that was selected
+    private Bitmap birdChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selection);
-
-        addRadioButtonListener();
     }
 
 
@@ -45,36 +45,41 @@ public class SelectionActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addRadioButtonListener(){
-        radioBirdGroup = (RadioGroup)findViewById(R.id.BirdRadioGroup);
-        radioBirdGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            //Figured once the button gets clicked we get that element and load it up and pass it over
-            //to the Game to be played.
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.RadioSelectBanana:
-                        radioBirdButton = (RadioButton)findViewById(checkedId);
-                        Toast.makeText(SelectionActivity.this, radioBirdButton.getText(),Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.RadioSelectOstrich:
-                        radioBirdButton = (RadioButton)findViewById(checkedId);
-                        Toast.makeText(SelectionActivity.this, radioBirdButton.getText(),Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.RadioSelectParrot:
-                        radioBirdButton = (RadioButton)findViewById(checkedId);
-                        Toast.makeText(SelectionActivity.this, radioBirdButton.getText(),Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.RadioSelectRobin:
-                        radioBirdButton = (RadioButton)findViewById(checkedId);
-                        Toast.makeText(SelectionActivity.this, radioBirdButton.getText(),Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.RadioSelectSwallow:
-                        radioBirdButton = (RadioButton)findViewById(checkedId);
-                        Toast.makeText(SelectionActivity.this, radioBirdButton.getText(),Toast.LENGTH_SHORT).show();
-                        break;
-                }
-            }
-        });
+    private void onImageClick(Bitmap selectedBird){
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("BitmapSelectedBird", selectedBird);
+        startActivity(intent);
+    }
+
+    public void imageClicked(View view){
+        //Convert the view to an ImageView
+        ImageView imageView = (ImageView)view;
+        //Get the contentDescription from the image
+        String imageContentDescription = imageView.getContentDescription().toString();
+        //Using that content description compare it to the strings.xml values
+        if(imageContentDescription.equals(getString(R.string.robin))){
+            //Toast.makeText(this, "Robin1", Toast.LENGTH_SHORT).show();
+            birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.robin);
+        } else if(imageContentDescription.equals(getString(R.string.parrot))){
+            //Toast.makeText(this, "Parrot2", Toast.LENGTH_SHORT).show();
+            birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.parrot);
+        } else if(imageContentDescription.equals(getString(R.string.swallow))){
+            //Toast.makeText(this, "Swallow3", Toast.LENGTH_SHORT).show();
+            birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.swallow);
+        } else if(imageContentDescription.equals(getString(R.string.bananaquit))){
+            //Toast.makeText(this, "Bananaquit4", Toast.LENGTH_SHORT).show();
+            birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.bananaquit);
+        } else if(imageContentDescription.equals(getString(R.string.ostrich))){
+            //Toast.makeText(this, "Ostrich5", Toast.LENGTH_SHORT).show();
+            birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.ostrich);
+        }
+        //send the bird it's hopeful home through the intent
+        onImageClick(birdChoice);
     }
 }
+
+/**
+ * Need this in the GameActivity
+ * Intent intent = getIntent();
+ * Bitmap bitmap = (Bitmap)intent.getParcelableExtra("BitmapSelectedBird");
+ */
