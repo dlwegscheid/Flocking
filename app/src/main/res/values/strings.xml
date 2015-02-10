@@ -16,5 +16,6 @@
     <string name="player_one">Player 1: </string>
     <string name="player_two">Player 2: </string>
     <string name="input_name">Your Name Here</string>
+    <string name="place_button">Place</string>
 
 </resources>

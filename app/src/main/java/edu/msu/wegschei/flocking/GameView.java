@@ -78,10 +78,10 @@ public class GameView extends View {
         int marginX = (wid - gameSize) / 2;
         int marginY = (hit - gameSize) / 2;
 
-        canvas.drawRect(marginX, marginY, marginX + gameSize, marginY + gameSize, fillPaint);
         canvas.drawRect(marginX - BRUSH_WIDTH, marginY - BRUSH_WIDTH,
                 marginX + gameSize + BRUSH_WIDTH, marginY + gameSize + BRUSH_WIDTH,
                 outlinePaint);
+        canvas.drawRect(marginX, marginY, marginX + gameSize, marginY + gameSize, fillPaint);
 
         bird.draw(canvas, wid / 2, hit / 2);
     }
