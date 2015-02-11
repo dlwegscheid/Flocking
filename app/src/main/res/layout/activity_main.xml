@@ -15,11 +15,43 @@
         android:layout_marginBottom="74dp"
         android:onClick="onStartGame" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/game_title"
+        android:id="@+id/gameTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ostrich"
+        android:src="@drawable/ostrich"
+        android:contentDescription="@string/ostrich"
+        android:clickable="false"
+        android:cropToPadding="false"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:adjustViewBounds="true"
+        android:maxHeight="200dp"
+        android:baselineAlignBottom="false"
+        android:paddingTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:minHeight="180dp"
+        android:scaleType="centerInside" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:baselineAligned="false">
+        android:baselineAligned="false"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
+        android:paddingTop="50dp">
 
         <FrameLayout
             android:layout_width="wrap_content"

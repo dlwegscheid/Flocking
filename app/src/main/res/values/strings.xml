@@ -17,5 +17,6 @@
     <string name="player_two">Player 2: </string>
     <string name="input_name">Your Name Here</string>
     <string name="place_button">Place</string>
+    <string name="game_title">The Flocking Game</string>
 
 </resources>
