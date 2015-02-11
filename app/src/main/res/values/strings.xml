@@ -18,5 +18,7 @@
     <string name="input_name">Your Name Here</string>
     <string name="place_button">Place</string>
     <string name="game_title">The Flocking Game</string>
+    <string name="title_activity_score">ScoreActivity</string>
+    <string name="reset">Reset</string>
 
 </resources>

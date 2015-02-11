@@ -33,8 +33,6 @@
         android:contentDescription="@string/ostrich"
         android:clickable="false"
         android:cropToPadding="false"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
         android:adjustViewBounds="true"
         android:maxHeight="200dp"
         android:baselineAlignBottom="false"
@@ -49,8 +47,6 @@
         android:layout_height="fill_parent"
         android:baselineAligned="false"
         android:id="@+id/linearLayout"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentStart="false"
         android:paddingTop="50dp">
 
         <FrameLayout

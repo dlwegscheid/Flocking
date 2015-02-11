@@ -6,21 +6,37 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 
-public class GameActivity extends ActionBarActivity {
+public class ScoreActivity extends ActionBarActivity {
+
+    private int birdsPlaced;
+    private String winner;
+
+    private TextView textWinner;
+    private TextView textBirdsPlaced;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_score);
+
+        winner = "Player 1 Wins!";
+        birdsPlaced = 0;
+
+        textWinner = (TextView)findViewById(R.id.textWinner);
+        textWinner.setText(winner);
+
+        textBirdsPlaced = (TextView)findViewById(R.id.textBirdsPlaced);
+        textBirdsPlaced.setText("Birds placed: " + birdsPlaced);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_game, menu);
+        getMenuInflater().inflate(R.menu.menu_score, menu);
         return true;
     }
 
@@ -39,8 +55,9 @@ public class GameActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onPlace(View view) {
-        Intent intent = new Intent(this, ScoreActivity.class);
+    public void onReset(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 }
