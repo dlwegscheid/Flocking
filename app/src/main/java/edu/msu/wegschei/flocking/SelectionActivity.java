@@ -47,7 +47,8 @@ public class SelectionActivity extends ActionBarActivity {
 
     private void onImageClick(Bitmap selectedBird){
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("BitmapSelectedBird", selectedBird);
+        //intent.putExtra("BitmapSelectedBird", selectedBird);
+        //Bird isn't being passed yet, causes weird behavior.
         startActivity(intent);
     }
 
@@ -72,6 +73,7 @@ public class SelectionActivity extends ActionBarActivity {
         } else if(imageContentDescription.equals(getString(R.string.ostrich))){
             //Toast.makeText(this, "Ostrich5", Toast.LENGTH_SHORT).show();
             birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.ostrich);
+            //birdChoice = BitmapFactory.decodeResource(getResources(), R.drawable.bananaquit);
         }
         //send the bird it's hopeful home through the intent
         onImageClick(birdChoice);
