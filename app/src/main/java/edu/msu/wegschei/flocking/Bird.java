@@ -31,9 +31,14 @@ public class Bird {
     private float x = 0;
 
     /**
-     * y location
+     * y location in pixels
      */
     private float y = 0;
+
+    /**
+     * scale factor
+     */
+    private float scale;
 
     public Bird(Context context, int id) {
         bird = BitmapFactory.decodeResource(context.getResources(), id);
@@ -48,7 +53,11 @@ public class Bird {
     }
 
     private void setRect() {
-        rect.set((int)x, (int)y, (int)x+bird.getWidth(), (int)y+bird.getHeight());
+        rect.set((int)x, (int)y, (int)(x+bird.getWidth()*scale), (int)(y+bird.getHeight()*scale));
+    }
+
+    public Rect getRect() {
+        return rect;
     }
 
     public boolean hit(float testX, float testY) {
@@ -101,13 +110,21 @@ public class Bird {
         return false;
     }
 
-    public void draw(Canvas canvas, float X, float Y) {
-        int hit = bird.getHeight();
-        int wid = bird.getWidth();
-
+    /**
+     * Draw the puzzle piece
+     * @param canvas Canvas we are drawing on
+     * @param scaleFactor Amount we scale the game pieces when we draw them
+     */
+    public void draw(Canvas canvas, float scaleFactor) {
+        scale = scaleFactor;
         canvas.save();
-        canvas.translate(-wid / 2, -hit / 2);
-        canvas.drawBitmap(bird, X, Y, null);
+
+        canvas.translate(x, y);
+        canvas.scale(scaleFactor, scaleFactor);
+        canvas.translate(-bird.getWidth() / 2, -bird.getHeight() / 2);
+
+        // Draw the bitmap
+        canvas.drawBitmap(bird, 0, 0, null);
         canvas.restore();
     }
 }

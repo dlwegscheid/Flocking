@@ -1,22 +1,25 @@
 package edu.msu.wegschei.flocking;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 public class GameActivity extends ActionBarActivity {
+
+    /**
+     * The game view in this activity's view
+     */
+    private GameView gameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        gameView = (GameView)this.findViewById(R.id.gameView);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,7 +44,6 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void onPlace(View view) {
-        Intent intent = new Intent(this, ScoreActivity.class);
-        startActivity(intent);
+        gameView.onPlace();
     }
 }
