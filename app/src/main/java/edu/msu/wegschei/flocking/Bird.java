@@ -120,6 +120,7 @@ public class Bird {
         canvas.save();
 
         canvas.translate(x, y);
+        canvas.translate(bird.getWidth() / 2 * scale, bird.getHeight() / 2 * scale);
         canvas.scale(scaleFactor, scaleFactor);
         canvas.translate(-bird.getWidth() / 2, -bird.getHeight() / 2);
 

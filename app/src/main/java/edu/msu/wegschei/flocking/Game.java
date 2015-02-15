@@ -198,13 +198,16 @@ public class Game {
     }
 
     public void onPlace(Context context) {
+        CharSequence text;
+
         boundary.set(marginX, marginY, marginX + gameSize, marginY + gameSize);
         if(!boundary.contains(dragging.getRect())) {
-            CharSequence text = "outside boundary";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+            text = "outside boundary";
+        } else {
+            text = "inside boundary";
         }
+
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
