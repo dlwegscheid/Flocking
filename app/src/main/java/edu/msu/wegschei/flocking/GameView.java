@@ -42,7 +42,8 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        game = new Game(getContext(), this, this.birdID);
+        game = new Game(getContext(), this);
+        game.setSelectedBirdImage(getContext(), this.birdID);
     }
 
     @Override
