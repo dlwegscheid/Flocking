@@ -16,7 +16,7 @@ public class Bird {
     private Bitmap bird;
 
     /**
-     * Rectangle that is where our bird is.
+     * Rectangle that is where our bird is in pixels
      */
     private Rect rect;
 
@@ -36,12 +36,21 @@ public class Bird {
     private float y = 0;
 
     /**
-     * scale factor
+     * dimensions from the canvas for collision testing
      */
-    private float scale;
+    private int marginX = 0;
+    private int marginY = 0;
+    private int gameSize = 0;
+    private float scaleFactor = 1f;
 
-    public Bird(Context context, int id) {
-        bird = BitmapFactory.decodeResource(context.getResources(), id);
+    /**
+     * Id for the bitmap
+     */
+    private int id;
+
+    public Bird(Context context, int bitmapId) {
+        id = bitmapId;
+        bird = BitmapFactory.decodeResource(context.getResources(), bitmapId);
         rect = new Rect();
         setRect();
     }
@@ -52,12 +61,46 @@ public class Bird {
         setRect();
     }
 
-    private void setRect() {
-        rect.set((int)x, (int)y, (int)(x+bird.getWidth()*scale), (int)(y+bird.getHeight()*scale));
-    }
-
     public Rect getRect() {
         return rect;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getPixelLeft() {
+        return x*gameSize+marginX-bird.getWidth()/2*scaleFactor;
+    }
+
+    public float getPixelTop() {
+        return y*gameSize+marginY-bird.getHeight()/2*scaleFactor;
+    }
+
+    private void setRect() {
+        float left = getPixelLeft();
+        float top = getPixelTop();
+
+        rect.set((int)(left),
+                (int)(top),
+                (int)(left+bird.getWidth()*scaleFactor),
+                (int)(top+bird.getHeight()*scaleFactor));
     }
 
     public boolean hit(float testX, float testY) {
@@ -92,16 +135,17 @@ public class Bird {
 
         // We have overlap. Now see if we have any pixels in common
         for(int r=overlap.top; r<overlap.bottom;  r++) {
-            int aY = (int)((r - y));
-            int bY = (int)((r - other.y));
+            int aY = (int)(Math.abs(r - getPixelTop())/scaleFactor);
+            int bY = (int)(Math.abs(r - other.getPixelTop())/scaleFactor);
 
             for(int c=overlap.left;  c<overlap.right;  c++) {
 
-                int aX = (int)((c - x));
-                int bX = (int)((c - other.x));
+                int aX = (int)(Math.abs(c - getPixelLeft())/scaleFactor);
+                int bX = (int)(Math.abs(c - other.getPixelLeft())/scaleFactor);
 
                 if( (bird.getPixel(aX, aY) & 0x80000000) != 0 &&
                         (other.bird.getPixel(bX, bY) & 0x80000000) != 0) {
+                    //Log.i("collision", "Overlap " + r + "," + c);
                     return true;
                 }
             }
@@ -111,22 +155,28 @@ public class Bird {
     }
 
     /**
-     * Draw the puzzle piece
+     * Draw the bird
      * @param canvas Canvas we are drawing on
-     * @param scaleFactor Amount we scale the game pieces when we draw them
+     * @param mX Margin x value in pixels
+     * @param mY Margin y value in pixels
+     * @param gSize Size we draw the game in pixels
+     * @param sFactor Amount we scale the birds when we draw them
      */
-    public void draw(Canvas canvas, float scaleFactor) {
-        scale = scaleFactor;
+    public void draw(Canvas canvas, int mX, int mY, int gSize, float sFactor) {
+        marginX = mX;
+        marginY = mY;
+        gameSize = gSize;
+        scaleFactor = sFactor;
+
+        setRect();
         canvas.save();
 
-        canvas.translate(x, y);
-        canvas.translate(bird.getWidth() / 2 * scale, bird.getHeight() / 2 * scale);
+        canvas.translate(marginX + x * gameSize, marginY + y * gameSize);
         canvas.scale(scaleFactor, scaleFactor);
         canvas.translate(-bird.getWidth() / 2, -bird.getHeight() / 2);
 
         // Draw the bitmap
-        //canvas.drawBitmap(bird, 0, 0, null);
-        canvas.drawBitmap(bird, 75, 75, null);
+        canvas.drawBitmap(bird, 0, 0, null);
         canvas.restore();
     }
 }

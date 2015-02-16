@@ -14,11 +14,15 @@ public class GameActivity extends ActionBarActivity {
     private GameView gameView;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         setContentView(R.layout.activity_game);
 
         gameView = (GameView)this.findViewById(R.id.gameView);
+
+        if(bundle != null) {
+            gameView.loadInstanceState(bundle);
+        }
     }
 
     @Override
@@ -45,5 +49,12 @@ public class GameActivity extends ActionBarActivity {
 
     public void onPlace(View view) {
         gameView.onPlace();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+
+        gameView.saveInstanceState(bundle);
     }
 }

@@ -108,7 +108,7 @@ public class Game {
      */
     private float IMAGE_RATIO;
 
-    public Game(Context context, View parent) {
+    public Game(Context context, View parent, int birdID) {
 
         parentView = parent;
 
@@ -123,15 +123,13 @@ public class Game {
 
         boundary = new Rect();
 
-        /**
-         * OLD METHOD BELOW, IF YOU WANT IT FOR TESTING REASONS
-         */
 //        // Load the solved bird image
 //        ostrich = BitmapFactory.decodeResource(context.getResources(), R.drawable.ostrich);
 //
         //dragging = new Bird(context, R.drawable.ostrich);
         //birds.add(dragging);
 
+        setSelectedBirdImage(context, birdID);
 
     }
 
@@ -228,7 +226,7 @@ public class Game {
         toast.show();
     }
 
-    protected void setSelectedBirdImage(Context context, int birdID){
+    private void setSelectedBirdImage(Context context, int birdID){
         selectedBirdImage = BitmapFactory.decodeResource(context.getResources(), birdID);
         dragging = new Bird(context, birdID);
         birds.add(dragging);
