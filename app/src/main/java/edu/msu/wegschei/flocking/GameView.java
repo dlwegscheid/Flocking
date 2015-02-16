@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 /**
  * Custom View class for the game board
@@ -42,13 +43,13 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        game = new Game(getContext(), this, this.birdID);
+        game = new Game(getContext(), this);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        //game.addSelectedBird(getContext(), birdID);
+
         game.draw(canvas);
     }
 
@@ -58,6 +59,23 @@ public class GameView extends View {
     }
 
     public void onPlace() {
-        game.onPlace(getContext());
+        CharSequence text;
+
+        if(game.canPlace()) {
+            text = "GOOD";
+        } else {
+            text = "BAD";
+        }
+        Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
+        toast.show();
     }
+
+    public void loadInstanceState(Bundle bundle) {
+        game.loadInstanceState(bundle, getContext());
+    }
+
+    public void saveInstanceState(Bundle bundle) {
+        game.saveInstanceState(bundle);
+    }
+
 }
