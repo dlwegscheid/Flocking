@@ -38,7 +38,7 @@ public class Game {
     private int gameSize;
 
     /**
-     * How much we scale the puzzle pieces
+     * How much we scale the bird pieces
      */
     private float scaleFactor;
 
@@ -73,10 +73,15 @@ public class Game {
      */
     private View parentView = null;
 
+//    /**
+//     * An ostrich bitmap for scaling
+//     */
+//    private Bitmap ostrich;
+
     /**
-     * An ostrich bitmap for scaling
+     * Selected bird ID image
      */
-    private Bitmap ostrich;
+    private Bitmap selectedBirdImage;
 
     /**
      * A rectangle of the boundary of the play area
@@ -93,12 +98,17 @@ public class Game {
      */
     final static float SCALE_IN_VIEW = 0.9f;
 
+//    /**
+//     * Ratio of board height to ostrich height
+//     */
+//    final static float OSTRICH_RATIO = 1.5f;
+
     /**
      * Ratio of board height to ostrich height
      */
-    final static float OSTRICH_RATIO = 1.5f;
+    private float IMAGE_RATIO;
 
-    public Game(Context context, View parent) {
+    public Game(Context context, View parent, int birdID) {
 
         parentView = parent;
 
@@ -113,11 +123,14 @@ public class Game {
 
         boundary = new Rect();
 
-        // Load the solved puzzle image
-        ostrich = BitmapFactory.decodeResource(context.getResources(), R.drawable.ostrich);
+//        // Load the solved bird image
+//        ostrich = BitmapFactory.decodeResource(context.getResources(), R.drawable.ostrich);
+//
+        //dragging = new Bird(context, R.drawable.ostrich);
+        //birds.add(dragging);
 
-        dragging = new Bird(context, R.drawable.ostrich);
-        birds.add(dragging);
+        setSelectedBirdImage(context, birdID);
+
     }
 
     public void draw(Canvas canvas) {
@@ -144,7 +157,9 @@ public class Game {
         boundary.set(marginX, marginY, marginX + gameSize, marginY + gameSize);
         canvas.drawRect(boundary, fillPaint);
 
-        scaleFactor = (float)gameSize / (float)ostrich.getHeight() / OSTRICH_RATIO;
+        //scaleFactor = (float)gameSize / (float)ostrich.getHeight() / OSTRICH_RATIO;
+
+        scaleFactor = (float)gameSize / (float)selectedBirdImage.getHeight() / IMAGE_RATIO;
 
         for(Bird bird : birds) {
             bird.draw(canvas, scaleFactor);
@@ -209,5 +224,25 @@ public class Game {
 
         Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    private void setSelectedBirdImage(Context context, int birdID){
+        selectedBirdImage = BitmapFactory.decodeResource(context.getResources(), birdID);
+        dragging = new Bird(context, birdID);
+        birds.add(dragging);
+
+        //Calculate the ratio for the images
+        if(birdID == R.drawable.ostrich){
+            IMAGE_RATIO = 1.5f;
+        } else if(birdID == R.drawable.robin){
+            IMAGE_RATIO = 15.0f;
+        } else if(birdID == R.drawable.bananaquit){
+            IMAGE_RATIO = 16.0f;
+        } else if(birdID == R.drawable.swallow){
+            IMAGE_RATIO = 19.0f;
+        } else if(birdID == R.drawable.parrot){
+            IMAGE_RATIO = 4.0f;
+        }
+
     }
 }

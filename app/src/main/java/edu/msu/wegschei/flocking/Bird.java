@@ -125,7 +125,8 @@ public class Bird {
         canvas.translate(-bird.getWidth() / 2, -bird.getHeight() / 2);
 
         // Draw the bitmap
-        canvas.drawBitmap(bird, 0, 0, null);
+        //canvas.drawBitmap(bird, 0, 0, null);
+        canvas.drawBitmap(bird, 75, 75, null);
         canvas.restore();
     }
 }

@@ -1,7 +1,10 @@
 package edu.msu.wegschei.flocking;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +18,10 @@ public class GameView extends View {
      * The game
      */
     private Game game;
+    /**
+     * The bird ID from Selection view
+     */
+    private int birdID;
 
     public GameView(Context context) {
         super(context);
@@ -23,6 +30,9 @@ public class GameView extends View {
 
     public GameView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        Intent intent = ((Activity)getContext()).getIntent();
+        Bundle bundle = intent.getExtras();
+        birdID = bundle.getInt("BirdImageID");
         init(attrs, 0);
     }
 
@@ -32,13 +42,13 @@ public class GameView extends View {
     }
 
     private void init(AttributeSet attrs, int defStyle) {
-        game = new Game(getContext(), this);
+        game = new Game(getContext(), this, this.birdID);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
+        //game.addSelectedBird(getContext(), birdID);
         game.draw(canvas);
     }
 

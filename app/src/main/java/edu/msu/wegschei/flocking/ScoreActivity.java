@@ -11,14 +11,19 @@ import android.widget.TextView;
 
 public class ScoreActivity extends ActionBarActivity {
 
-    private int birdsPlaced;
-    private String winner;
-
-    private TextView textWinner;
-    private TextView textBirdsPlaced;
+//    private int birdsPlaced;
+//    private String winner;
+//
+//    private TextView textWinner;
+//    private TextView textBirdsPlaced;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        int birdsPlaced;
+        String winner;
+
+        TextView textWinner;
+        TextView textBirdsPlaced;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_score);
 
