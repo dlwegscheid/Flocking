@@ -99,19 +99,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="@string/input_name"
                     android:ems="10"
-                    android:id="@+id/editText3"
-                    android:layout_gravity="center_horizontal" />
+                    android:id="@+id/playerOne"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="@string/input_name" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPersonName"
-                    android:text="@string/input_name"
                     android:ems="10"
-                    android:id="@+id/editText4"
-                    android:layout_gravity="center_horizontal" />
+                    android:id="@+id/playerTwo"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="@string/input_name" />
             </LinearLayout>
 
             <FrameLayout

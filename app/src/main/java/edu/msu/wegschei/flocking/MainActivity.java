@@ -6,14 +6,48 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+    private EditText playerOne;
+    private EditText playerTwo;
+
+    private final static String PLAYER_ONE = "MainActivity.playerOne";
+    private final static String PLAYER_TWO = "MainActivity.playerTwo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.playerOne = (EditText)findViewById(R.id.playerOne);
+        this.playerTwo = (EditText)findViewById(R.id.playerTwo);
+
+        if(savedInstanceState != null) {
+            // We have saved state
+            loadInstanceState(savedInstanceState);
+        }
+    }
+
+
+    public void loadInstanceState(Bundle bundle) {
+        String nameOne = bundle.getString(PLAYER_ONE);
+        String nameTwo = bundle.getString(PLAYER_TWO);
+
+        playerOne.setText(nameOne, TextView.BufferType.EDITABLE);
+        playerTwo.setText(nameTwo, TextView.BufferType.EDITABLE);
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle bundle) {
+        String nameOne = playerOne.getText().toString();
+        String nameTwo = playerTwo.getText().toString();
+
+        bundle.putString(PLAYER_ONE, nameOne);
+        bundle.putString(PLAYER_TWO, nameTwo);
     }
 
 
@@ -41,6 +75,9 @@ public class MainActivity extends ActionBarActivity {
 
     public void onStartGame(View view){
         Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(GameActivity.PLAYER_ONE, playerOne.getText().toString());
+        intent.putExtra(GameActivity.PLAYER_TWO, playerTwo.getText().toString());
+
         startActivity(intent);
     }
 }

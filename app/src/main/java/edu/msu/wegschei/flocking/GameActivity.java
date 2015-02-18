@@ -15,12 +15,23 @@ public class GameActivity extends ActionBarActivity {
      */
     private GameView gameView;
 
+    public final static String PLAYER_ONE = "GameActivity.playerOne";
+    public final static String PLAYER_TWO = "GameActivity.playerTwo";
+
+    private String playerNameOne;
+    private String playerNameTwo;
+
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_game);
 
         gameView = (GameView)this.findViewById(R.id.gameView);
+
+        //Gets the players' names that came from MainActivity, stores them in variables here
+        Bundle extras = getIntent().getExtras();
+        playerNameOne = extras.getString(PLAYER_ONE);
+        playerNameTwo = extras.getString(PLAYER_TWO);
 
         if(bundle != null) {
             gameView.loadInstanceState(bundle);

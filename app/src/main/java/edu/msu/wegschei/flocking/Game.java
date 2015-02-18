@@ -114,8 +114,16 @@ public class  Game {
     private final static String LOCATIONS = "Game.locations";
     private final static String IDS = "Game.ids";
     private final static String DRAGGING_INDEX = "Game.draggingIndex";
+    private final static String PLAYER_ONE = "Game.playerOne";
+    private final static String PLAYER_TWO = "Game.playerTwo";
 
     private Context thisContext;
+
+    /**
+     * The names of the players in the game.
+     */
+    private String playerOne;
+    private String playerTwo;
 
     public Game(Context context, View parent) {
 
@@ -246,6 +254,8 @@ public class  Game {
         float [] locations = bundle.getFloatArray(LOCATIONS);
         int [] ids = bundle.getIntArray(IDS);
         int draggingIndex = bundle.getInt(DRAGGING_INDEX);
+        playerOne = bundle.getString(PLAYER_ONE);
+        playerTwo = bundle.getString(PLAYER_TWO);
 
         birds.clear();
         dragging = null;
@@ -283,6 +293,9 @@ public class  Game {
         bundle.putFloatArray(LOCATIONS, locations);
         bundle.putIntArray(IDS,  ids);
         bundle.putInt(DRAGGING_INDEX, draggingIndex);
+        bundle.putString(PLAYER_ONE, playerOne);
+        bundle.putString(PLAYER_TWO, playerTwo);
+
     }
 
     private void callSelectionActivity(){
