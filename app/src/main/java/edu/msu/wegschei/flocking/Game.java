@@ -1,11 +1,14 @@
 package edu.msu.wegschei.flocking;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -15,7 +18,7 @@ import java.util.ArrayList;
 /**
  * class to describe a Game
  */
-public class Game {
+public class  Game {
 
     /**
      * Paint for filling the area the game is in
@@ -55,12 +58,12 @@ public class Game {
     /**
      * Most recent relative X touch when dragging
      */
-    private float lastX;
+    private float lastRelX;
 
     /**
      * Most recent relative Y touch when dragging
      */
-    private float lastY;
+    private float lastRelY;
 
     /**
      * This variable is set to a bird we are dragging. If
@@ -73,15 +76,10 @@ public class Game {
      */
     private View parentView = null;
 
-//    /**
-//     * An ostrich bitmap for scaling
-//     */
-//    private Bitmap ostrich;
-
     /**
-     * Selected bird ID image
+     * An ostrich bitmap for scaling
      */
-    private Bitmap selectedBirdImage;
+    private Bitmap ostrich;
 
     /**
      * A rectangle of the boundary of the play area
@@ -98,19 +96,31 @@ public class Game {
      */
     final static float SCALE_IN_VIEW = 0.9f;
 
-//    /**
-//     * Ratio of board height to ostrich height
-//     */
-//    final static float OSTRICH_RATIO = 1.5f;
-
     /**
      * Ratio of board height to ostrich height
      */
-    private float IMAGE_RATIO;
+    final static float OSTRICH_RATIO = 1.5f;
 
-    public Game(Context context, View parent, int birdID) {
+    /**
+     * BirdIDs from the Selection Activity
+     * May or may not need these depending on how you want to handle the IDs
+     */
+    private int firstBirdID;
+    private int secondBirdID;
+
+    /**
+     * The name of the bundle keys to save the puzzle
+     */
+    private final static String LOCATIONS = "Game.locations";
+    private final static String IDS = "Game.ids";
+    private final static String DRAGGING_INDEX = "Game.draggingIndex";
+
+    private Context thisContext;
+
+    public Game(Context context, View parent) {
 
         parentView = parent;
+        thisContext = context;
 
         // Create paint for filling the area the puzzle will
         // be solved in.
@@ -123,14 +133,17 @@ public class Game {
 
         boundary = new Rect();
 
-//        // Load the solved bird image
-//        ostrich = BitmapFactory.decodeResource(context.getResources(), R.drawable.ostrich);
-//
-        //dragging = new Bird(context, R.drawable.ostrich);
-        //birds.add(dragging);
+        // Load the solved puzzle image
+        ostrich = BitmapFactory.decodeResource(context.getResources(), R.drawable.ostrich);
 
-        setSelectedBirdImage(context, birdID);
+        dragging = new Bird(context, R.drawable.bananaquit);
+        Bird bird = new Bird(context, R.drawable.bananaquit);
+        bird.move(0.5f, 0.5f);
+        birds.add(bird);
+        birds.add(dragging);
 
+        //Need to prime it and get two initial bird ID
+        callSelectionActivity();
     }
 
     public void draw(Canvas canvas) {
@@ -157,12 +170,10 @@ public class Game {
         boundary.set(marginX, marginY, marginX + gameSize, marginY + gameSize);
         canvas.drawRect(boundary, fillPaint);
 
-        //scaleFactor = (float)gameSize / (float)ostrich.getHeight() / OSTRICH_RATIO;
-
-        scaleFactor = (float)gameSize / (float)selectedBirdImage.getHeight() / IMAGE_RATIO;
+        scaleFactor = (float)gameSize / (float)ostrich.getHeight() / OSTRICH_RATIO;
 
         for(Bird bird : birds) {
-            bird.draw(canvas, scaleFactor);
+            bird.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         }
     }
 
@@ -173,13 +184,18 @@ public class Game {
      * @return true if the touch is handled.
      */
     public boolean onTouchEvent(View view, MotionEvent event) {
+        //
+        // Convert an x,y location to a relative location in the game.
+        //
 
-        float X = event.getX();
-        float Y = event.getY();
+        float relX = (event.getX() - marginX) / gameSize;
+        float relY = (event.getY() - marginY) / gameSize;
 
         switch(event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                return onTouched(X, Y);
+                lastRelX = relX;
+                lastRelY = relY;
+                return true;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
@@ -188,9 +204,9 @@ public class Game {
             case MotionEvent.ACTION_MOVE:
                 // If we are dragging, move the piece and force a redraw
                 if(dragging != null) {
-                    dragging.move(X - lastX, Y - lastY);
-                    lastX = X;
-                    lastY = Y;
+                    dragging.move(relX - lastRelX, relY - lastRelY);
+                    lastRelX = relX;
+                    lastRelY = relY;
                     view.invalidate();
                     return true;
                 }
@@ -206,43 +222,78 @@ public class Game {
      * @return true if the touch is handled
      */
     private boolean onTouched(float x, float y) {
-        lastX = x;
-        lastY = y;
+        lastRelX = x;
+        lastRelY = y;
 
         return true;
     }
 
-    public void onPlace(Context context) {
-        CharSequence text;
-
+    public boolean canPlace() {
         boundary.set(marginX, marginY, marginX + gameSize, marginY + gameSize);
-        if(!boundary.contains(dragging.getRect())) {
-            text = "outside boundary";
+        if(boundary.contains(dragging.getRect())) {
+            for(Bird bird : birds) {
+                if(bird != dragging && dragging.collisionTest(bird)) {
+                    return false;
+                }
+            }
+            return true;
         } else {
-            text = "inside boundary";
+            return false;
         }
-
-        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
-        toast.show();
     }
 
-    private void setSelectedBirdImage(Context context, int birdID){
-        selectedBirdImage = BitmapFactory.decodeResource(context.getResources(), birdID);
-        dragging = new Bird(context, birdID);
-        birds.add(dragging);
+    public void loadInstanceState(Bundle bundle, Context context) {
+        float [] locations = bundle.getFloatArray(LOCATIONS);
+        int [] ids = bundle.getIntArray(IDS);
+        int draggingIndex = bundle.getInt(DRAGGING_INDEX);
 
-        //Calculate the ratio for the images
-        if(birdID == R.drawable.ostrich){
-            IMAGE_RATIO = 1.5f;
-        } else if(birdID == R.drawable.robin){
-            IMAGE_RATIO = 15.0f;
-        } else if(birdID == R.drawable.bananaquit){
-            IMAGE_RATIO = 16.0f;
-        } else if(birdID == R.drawable.swallow){
-            IMAGE_RATIO = 19.0f;
-        } else if(birdID == R.drawable.parrot){
-            IMAGE_RATIO = 4.0f;
+        birds.clear();
+        dragging = null;
+
+        for(int i=0; i<ids.length; i++) {
+            Bird bird = new Bird(context, ids[i]);
+            bird.setX(locations[2*i]);
+            bird.setY(locations[2*i+1]);
+            birds.add(bird);
+
+            if(i == draggingIndex) {
+                dragging = bird;
+            }
         }
 
+        birds.remove(dragging);
+        birds.add(dragging);
+    }
+
+    public void saveInstanceState(Bundle bundle) {
+        float [] locations = new float[birds.size() * 2];
+        int [] ids = new int[birds.size()];
+        int draggingIndex = -1;
+
+        for(int i=0;  i<birds.size(); i++) {
+            Bird bird = birds.get(i);
+            if(bird == dragging) {
+                draggingIndex = i;
+            }
+            locations[i*2] = bird.getX();
+            locations[i*2+1] = bird.getY();
+            ids[i] = bird.getId();
+        }
+
+        bundle.putFloatArray(LOCATIONS, locations);
+        bundle.putIntArray(IDS,  ids);
+        bundle.putInt(DRAGGING_INDEX, draggingIndex);
+    }
+
+    private void callSelectionActivity(){
+        //Half ass way to get it....
+        Intent intent = new Intent(thisContext, SelectionActivity.class);
+        ((Activity)thisContext).startActivityForResult(intent, 1);
+    }
+
+    protected void setSelectedBirdID(int birdID){
+        //Hey David/Chris, if you don't want the selected Bird being added for your testing, just comment the line below.
+        //However, on the brighter side, your collision detection works on it....nice work dude!!
+        birds.add(new Bird(thisContext, birdID));
     }
 }

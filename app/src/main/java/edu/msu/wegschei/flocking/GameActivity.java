@@ -1,5 +1,7 @@
 package edu.msu.wegschei.flocking;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,4 +59,25 @@ public class GameActivity extends ActionBarActivity {
 
         gameView.saveInstanceState(bundle);
     }
+
+    /**
+     * this never actually fires...it wanted to say hi for a bit
+     */
+//    public void getUserBirds(){
+//        int birdID1 = 1;
+//        Intent intent1 = new Intent(this, SelectionActivity.class);
+//        startActivityForResult(intent1,birdID1);
+//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+            Bundle extras = data.getExtras();
+            int birdID = extras.getInt("BirdImageID");
+            gameView.passBirdToGame(birdID);
+        }
+    }
+
 }
