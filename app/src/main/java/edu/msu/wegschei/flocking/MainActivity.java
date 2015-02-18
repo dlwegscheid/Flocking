@@ -40,7 +40,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onStartGame(View view){
-        Intent intent = new Intent(this, SelectionActivity.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 }
