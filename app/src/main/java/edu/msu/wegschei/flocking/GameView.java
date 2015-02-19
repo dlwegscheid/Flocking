@@ -17,9 +17,7 @@ public class GameView extends View {
      * The game
      */
     private Game game;
-    /**
-     * The bird ID from Selection view
-     */
+
     public GameView(Context context) {
         super(context);
         init(null, 0);
@@ -55,9 +53,11 @@ public class GameView extends View {
         CharSequence text;
 
         if(game.canPlace()) {
-            text = "GOOD";
+            text = "Bird Placed";
+            game.advanceGame(-1);
         } else {
-            text = "BAD";
+            text = "Invalid Placement";
+            game.end();
         }
         Toast toast = Toast.makeText(getContext(), text, Toast.LENGTH_SHORT);
         toast.show();
@@ -71,7 +71,5 @@ public class GameView extends View {
         game.saveInstanceState(bundle);
     }
 
-    public void passBirdToGame(int birdID){
-        game.setSelectedBirdID(birdID);
-    }
+    public void advanceGame(int birdID) { game.advanceGame(birdID); }
 }

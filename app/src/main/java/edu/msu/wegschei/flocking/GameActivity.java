@@ -18,6 +18,8 @@ public class GameActivity extends ActionBarActivity {
     public final static String PLAYER_ONE = "GameActivity.playerOne";
     public final static String PLAYER_TWO = "GameActivity.playerTwo";
 
+    private final static int BIRD_SELECTION = 1;
+
     private String playerNameOne;
     private String playerNameTwo;
 
@@ -35,6 +37,8 @@ public class GameActivity extends ActionBarActivity {
 
         if(bundle != null) {
             gameView.loadInstanceState(bundle);
+        } else {
+            gameView.advanceGame(-1);
         }
     }
 
@@ -84,10 +88,10 @@ public class GameActivity extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK){
+        if(requestCode == BIRD_SELECTION && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
             int birdID = extras.getInt("BirdImageID");
-            gameView.passBirdToGame(birdID);
+            gameView.advanceGame(birdID);
         }
     }
 

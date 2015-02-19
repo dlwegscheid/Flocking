@@ -103,20 +103,6 @@ public class Bird {
                 (int)(top+bird.getHeight()*scaleFactor));
     }
 
-    public boolean hit(float testX, float testY) {
-        int pX = (int)((testX - x));
-        int pY = (int)((testY - y));
-
-        if(pX < 0 || pX >= bird.getWidth() ||
-                pY < 0 || pY >= bird.getHeight()) {
-            return false;
-        }
-
-        // We are within the rectangle of the piece.
-        // Are we touching actual picture?
-        return (bird.getPixel(pX, pY) & 0xff000000) != 0;
-    }
-
     /**
      * Collision detection between two birds. This object is
      * compared to the one referenced by other
@@ -176,7 +162,7 @@ public class Bird {
         canvas.translate(-bird.getWidth() / 2, -bird.getHeight() / 2);
 
         // Draw the bitmap
-        canvas.drawBitmap(bird, 75, 75, null);
+        canvas.drawBitmap(bird, 0, 0, null);
         canvas.restore();
     }
 }

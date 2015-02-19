@@ -50,7 +50,6 @@ public class MainActivity extends ActionBarActivity {
         bundle.putString(PLAYER_TWO, nameTwo);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

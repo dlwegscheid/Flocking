@@ -11,7 +11,6 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -71,10 +70,13 @@ public class  Game {
      */
     private Bird dragging = null;
 
+    private Bird next = null;
+
     /**
      * The view of the game
      */
     private View parentView = null;
+    private Context parentContext = null;
 
     /**
      * An ostrich bitmap for scaling
@@ -105,8 +107,8 @@ public class  Game {
      * BirdIDs from the Selection Activity
      * May or may not need these depending on how you want to handle the IDs
      */
-    private int firstBirdID;
-    private int secondBirdID;
+    private int firstBirdID = -1;
+    private int secondBirdID = -1;
 
     /**
      * The name of the bundle keys to save the puzzle
@@ -116,8 +118,16 @@ public class  Game {
     private final static String DRAGGING_INDEX = "Game.draggingIndex";
     private final static String PLAYER_ONE = "Game.playerOne";
     private final static String PLAYER_TWO = "Game.playerTwo";
+    private final static String STATE = "Game.state";
 
-    private Context thisContext;
+    private enum State {
+        START,
+        PLAYER_ONE_SELECTING, PLAYER_TWO_SELECTING,
+        PLAYER_ONE_PLACING, PLAYER_TWO_PLACING
+    }
+
+    private State state = State.START;
+    private boolean player1First = true;
 
     /**
      * The names of the players in the game.
@@ -127,8 +137,8 @@ public class  Game {
 
     public Game(Context context, View parent) {
 
+        parentContext = context;
         parentView = parent;
-        thisContext = context;
 
         // Create paint for filling the area the puzzle will
         // be solved in.
@@ -143,15 +153,6 @@ public class  Game {
 
         // Load the solved puzzle image
         ostrich = BitmapFactory.decodeResource(context.getResources(), R.drawable.ostrich);
-
-        dragging = new Bird(context, R.drawable.bananaquit);
-        Bird bird = new Bird(context, R.drawable.bananaquit);
-        bird.move(0.5f, 0.5f);
-        birds.add(bird);
-        birds.add(dragging);
-
-        //Need to prime it and get two initial bird ID
-        callSelectionActivity();
     }
 
     public void draw(Canvas canvas) {
@@ -223,19 +224,6 @@ public class  Game {
         return false;
     }
 
-    /**
-     * Handle a touch message. This is when we get an initial touch
-     * @param x x location for the touch, relative to the game - 0 to 1 over the game
-     * @param y y location for the touch, relative to the game - 0 to 1 over the game
-     * @return true if the touch is handled
-     */
-    private boolean onTouched(float x, float y) {
-        lastRelX = x;
-        lastRelY = y;
-
-        return true;
-    }
-
     public boolean canPlace() {
         boundary.set(marginX, marginY, marginX + gameSize, marginY + gameSize);
         if(boundary.contains(dragging.getRect())) {
@@ -256,6 +244,7 @@ public class  Game {
         int draggingIndex = bundle.getInt(DRAGGING_INDEX);
         playerOne = bundle.getString(PLAYER_ONE);
         playerTwo = bundle.getString(PLAYER_TWO);
+        state = (State) bundle.getSerializable(STATE);
 
         birds.clear();
         dragging = null;
@@ -295,18 +284,80 @@ public class  Game {
         bundle.putInt(DRAGGING_INDEX, draggingIndex);
         bundle.putString(PLAYER_ONE, playerOne);
         bundle.putString(PLAYER_TWO, playerTwo);
-
+        bundle.putSerializable(STATE, state);
     }
 
-    private void callSelectionActivity(){
-        //Half ass way to get it....
-        Intent intent = new Intent(thisContext, SelectionActivity.class);
-        ((Activity)thisContext).startActivityForResult(intent, 1);
+    private void startSelectionActivity(){
+        Intent intent = new Intent(parentContext, SelectionActivity.class);
+        ((Activity)parentContext).startActivityForResult(intent, 1);
     }
 
-    protected void setSelectedBirdID(int birdID){
-        //Hey David/Chris, if you don't want the selected Bird being added for your testing, just comment the line below.
-        //However, on the brighter side, your collision detection works on it....nice work dude!!
-        birds.add(new Bird(thisContext, birdID));
+    public void advanceGame(int birdID) {
+        switch (state) {
+            case START:
+                state = State.PLAYER_ONE_SELECTING;
+                startSelectionActivity();
+                break;
+
+            case PLAYER_ONE_SELECTING:
+                if(player1First) {
+                    state = State.PLAYER_TWO_SELECTING;
+                    next = new Bird(parentContext, birdID);
+                    startSelectionActivity();
+                } else {
+                    state = State.PLAYER_TWO_PLACING;
+                    dragging = next;
+                    birds.add(dragging);
+                    next = new Bird(parentContext, birdID);
+                }
+                break;
+
+            case PLAYER_TWO_SELECTING:
+                if(player1First) {
+                    state = State.PLAYER_ONE_PLACING;
+                    dragging = next;
+                    birds.add(dragging);
+                    next = new Bird(parentContext, birdID);
+                } else {
+                    state = State.PLAYER_ONE_SELECTING;
+                    next = new Bird(parentContext, birdID);
+                    startSelectionActivity();
+                }
+                break;
+
+            case PLAYER_ONE_PLACING:
+                if(player1First) {
+                    state = State.PLAYER_TWO_PLACING;
+                    dragging = next;
+                    birds.add(dragging);
+                    next = null;
+                } else {
+                    dragging = null;
+                    player1First = !player1First;
+                    state = State.PLAYER_ONE_SELECTING;
+                    startSelectionActivity();
+                }
+                break;
+
+            case PLAYER_TWO_PLACING:
+                if(player1First) {
+                    dragging = null;
+                    player1First = !player1First;
+                    state = State.PLAYER_TWO_SELECTING;
+                    startSelectionActivity();
+                } else {
+                    state = State.PLAYER_ONE_PLACING;
+                    dragging = next;
+                    birds.add(dragging);
+                    next = null;
+                }
+                break;
+        }
+    }
+
+    public void end() {
+        Intent intent = new Intent(parentContext, ScoreActivity.class);
+
+        parentContext.startActivity(intent);
     }
 }

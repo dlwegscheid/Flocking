@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
 public class SelectionActivity extends ActionBarActivity {
 
     @Override
@@ -66,6 +65,5 @@ public class SelectionActivity extends ActionBarActivity {
         setResult(Activity.RESULT_OK, result);
         Toast.makeText(this, "Choice Received", Toast.LENGTH_SHORT).show();
         finish();
-
     }
 }
