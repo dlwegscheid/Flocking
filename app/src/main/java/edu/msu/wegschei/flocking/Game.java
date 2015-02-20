@@ -280,7 +280,7 @@ public class  Game {
         }
 
         bundle.putFloatArray(LOCATIONS, locations);
-        bundle.putIntArray(IDS,  ids);
+        bundle.putIntArray(IDS, ids);
         bundle.putInt(DRAGGING_INDEX, draggingIndex);
         bundle.putString(PLAYER_ONE, playerOne);
         bundle.putString(PLAYER_TWO, playerTwo);
@@ -355,10 +355,23 @@ public class  Game {
         }
     }
 
+    public void setNames(String p1, String p2) {
+        playerOne = p1;
+        playerTwo = p2;
+    }
+
     public void end() {
         Intent intent = new Intent(parentContext, ScoreActivity.class);
         intent.putExtra("ScoreActivity.score", birds.size()-1);
 
-        parentContext.startActivity(intent);
+        switch (state) {
+            case PLAYER_ONE_PLACING:
+                intent.putExtra("ScoreActivity.winner", playerTwo + " Wins!");
+                break;
+            case PLAYER_TWO_PLACING:
+                intent.putExtra("ScoreActivity.winner", playerOne + " Wins!");
+                break;
+        }
+            parentContext.startActivity(intent);
     }
 }

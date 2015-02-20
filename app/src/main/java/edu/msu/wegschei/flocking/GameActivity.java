@@ -34,6 +34,7 @@ public class GameActivity extends ActionBarActivity {
         Bundle extras = getIntent().getExtras();
         playerNameOne = extras.getString(PLAYER_ONE);
         playerNameTwo = extras.getString(PLAYER_TWO);
+        gameView.setNames(playerNameOne, playerNameTwo);
 
         if(bundle != null) {
             gameView.loadInstanceState(bundle);

@@ -18,6 +18,7 @@ public class ScoreActivity extends ActionBarActivity {
 //    private TextView textBirdsPlaced;
 
     private final static String SCORE = "ScoreActivity.score";
+    private final static String WINNER = "ScoreActivity.winner";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class ScoreActivity extends ActionBarActivity {
         setContentView(R.layout.activity_score);
 
         Bundle extras = getIntent().getExtras();
-        winner = "Player 1 Wins!";
+        winner = extras.getString(WINNER);
         birdsPlaced = extras.getInt(SCORE);
 
 
