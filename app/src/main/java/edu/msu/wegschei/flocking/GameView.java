@@ -54,6 +54,7 @@ public class GameView extends View {
 
         if(game.canPlace()) {
             text = "Bird Placed";
+            game.AddToScore();
             game.advanceGame(-1);
         } else {
             text = "Invalid Placement";

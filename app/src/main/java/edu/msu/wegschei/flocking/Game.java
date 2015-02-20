@@ -135,6 +135,8 @@ public class  Game {
     private String playerOne;
     private String playerTwo;
 
+    private int score = 0;
+
     public Game(Context context, View parent) {
 
         parentContext = context;
@@ -357,7 +359,12 @@ public class  Game {
 
     public void end() {
         Intent intent = new Intent(parentContext, ScoreActivity.class);
+        intent.putExtra("ScoreActivity.score", score);
 
         parentContext.startActivity(intent);
+    }
+
+    public void AddToScore() {
+        score++;
     }
 }
