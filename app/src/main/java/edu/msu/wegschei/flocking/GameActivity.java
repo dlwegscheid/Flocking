@@ -66,6 +66,7 @@ public class GameActivity extends ActionBarActivity {
 
     public void onPlace(View view) {
         gameView.onPlace();
+        gameView.invalidate();
     }
 
     @Override
