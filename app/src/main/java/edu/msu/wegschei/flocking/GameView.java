@@ -41,6 +41,10 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        //java.lang.NullPointerException
+        //  at edu.msu.wegschei.flocking.Game.draw(Game.java:185)
+        //  at edu.msu.wegschei.flocking.GameView.onDraw(GameView.java:44)
+
         game.draw(canvas);
     }
 

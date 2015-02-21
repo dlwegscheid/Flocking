@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class GameActivity extends ActionBarActivity {
 
@@ -105,7 +104,10 @@ public class GameActivity extends ActionBarActivity {
                 gameView.invalidate();
             } else if(counter < Players){
                 gameView.advanceGame(birdID);
-                chooseBird(myView);
+                //Turn this back on if you want them to be called one after another
+                //Turned it off for better testing...
+                //State machine does work though, so that's nice.
+                //chooseBird(myView);
                 counter++;
             }
 

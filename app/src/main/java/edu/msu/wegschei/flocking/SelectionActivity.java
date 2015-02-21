@@ -43,11 +43,6 @@ public class SelectionActivity extends ActionBarActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        //String STATE = intent.getStringExtra(GAME_STATE);
-        int BIRD_COUNT = intent.getExtras().getInt("BIRD_COUNT");
-        //savedInstanceState.putString(GAME_STATE, STATE);
-        savedInstanceState.putInt("BIRD_COUNT", BIRD_COUNT);
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -56,8 +51,6 @@ public class SelectionActivity extends ActionBarActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        //BUNDLE_STATE = savedInstanceState.getString(GAME_STATE);
-        //BIRD_COUNT = savedInstanceState.getInt("BIRD_COUNT");
     }
 
 

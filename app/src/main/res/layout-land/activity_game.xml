@@ -43,9 +43,10 @@
             android:layout_height="wrap_content"
             android:text="@string/selectBird"
             android:id="@+id/selectBird"
-            android:layout_below="@+id/buttonPlace"
-            android:layout_centerHorizontal="true"
-            android:onClick="chooseBird" />
+            android:onClick="chooseBird"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

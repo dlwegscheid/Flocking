@@ -75,7 +75,7 @@ public class Game extends Activity{
     /**
      * The view of the game
      */
-    private View parentView = null;
+    //private View parentView = null;
     private Context parentContext = null;
 
     /**
@@ -102,13 +102,6 @@ public class Game extends Activity{
      * Ratio of board height to ostrich height
      */
     final static float OSTRICH_RATIO = 1.5f;
-
-    /**
-     * BirdIDs from the Selection Activity
-     * May or may not need these depending on how you want to handle the IDs
-     */
-    private int firstBirdID = -1;
-    private int secondBirdID = -1;
 
     /**
      * The name of the bundle keys to save the puzzle
@@ -138,7 +131,7 @@ public class Game extends Activity{
     public Game(Context context, View parent) {
 
         parentContext = context;
-        parentView = parent;
+        //parentView = parent;
 
         // Create paint for filling the area the puzzle will
         // be solved in.
@@ -156,6 +149,10 @@ public class Game extends Activity{
     }
 
     public void draw(Canvas canvas) {
+
+        //java.lang.NullPointerException
+        //  at edu.msu.wegschei.flocking.Game.draw(Game.java:185)
+        //  at edu.msu.wegschei.flocking.GameView.onDraw(GameView.java:44)
 
         int wid = canvas.getWidth();
         int hit = canvas.getHeight();
@@ -182,6 +179,7 @@ public class Game extends Activity{
         scaleFactor = (float)gameSize / (float)ostrich.getHeight() / OSTRICH_RATIO;
 
         for(Bird bird : birds) {
+            //crashes here on any rotation!!!!!!
             bird.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         }
     }
@@ -287,11 +285,11 @@ public class Game extends Activity{
         bundle.putSerializable(STATE, state);
     }
 
-    private void startSelectionActivity(String playerName){
-        //
-        //intent.putExtra("PLAYER", playerName);
-        //((Activity)parentContext).startActivityForResult(intent, 1);
-    }
+//    private void startSelectionActivity(String playerName){
+//        //
+//        //intent.putExtra("PLAYER", playerName);
+//        //((Activity)parentContext).startActivityForResult(intent, 1);
+//    }
 
     public void advanceGame(int birdID) {
         switch (state) {
@@ -303,7 +301,7 @@ public class Game extends Activity{
                 if(player1First) {
                     state = State.PLAYER_TWO_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity(playerTwo);
+                    //startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_TWO_PLACING;
                     dragging = next;
@@ -321,7 +319,7 @@ public class Game extends Activity{
                 } else {
                     state = State.PLAYER_ONE_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity(playerOne);
+                    //startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -335,7 +333,7 @@ public class Game extends Activity{
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_ONE_SELECTING;
-                    startSelectionActivity(playerOne);
+                    //startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -344,7 +342,7 @@ public class Game extends Activity{
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_TWO_SELECTING;
-                    startSelectionActivity(playerTwo);
+                    //startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_ONE_PLACING;
                     dragging = next;
