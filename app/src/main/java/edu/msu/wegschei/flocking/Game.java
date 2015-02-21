@@ -116,9 +116,11 @@ public class  Game {
     private final static String LOCATIONS = "Game.locations";
     private final static String IDS = "Game.ids";
     private final static String DRAGGING_INDEX = "Game.draggingIndex";
+    private final static String NEXT_ID = "Game.nextId";
     private final static String PLAYER_ONE = "Game.playerOne";
     private final static String PLAYER_TWO = "Game.playerTwo";
     private final static String STATE = "Game.state";
+    private final static String ORDER = "Game.order";
 
     private enum State {
         START,
@@ -245,6 +247,8 @@ public class  Game {
         playerOne = bundle.getString(PLAYER_ONE);
         playerTwo = bundle.getString(PLAYER_TWO);
         state = (State) bundle.getSerializable(STATE);
+        player1First = bundle.getBoolean(ORDER);
+        int nextId = bundle.getInt(NEXT_ID);
 
         birds.clear();
         dragging = null;
@@ -260,14 +264,26 @@ public class  Game {
             }
         }
 
-        birds.remove(dragging);
-        birds.add(dragging);
+        next = null;
+        if(nextId != -1) {
+            next = new Bird(context, nextId);
+        }
+
+        if(dragging != null) {
+            birds.remove(dragging);
+            birds.add(dragging);
+        }
     }
 
     public void saveInstanceState(Bundle bundle) {
         float [] locations = new float[birds.size() * 2];
         int [] ids = new int[birds.size()];
         int draggingIndex = -1;
+
+        int nextId = -1;
+        if(next != null) {
+            nextId = next.getId();
+        }
 
         for(int i=0;  i<birds.size(); i++) {
             Bird bird = birds.get(i);
@@ -280,11 +296,13 @@ public class  Game {
         }
 
         bundle.putFloatArray(LOCATIONS, locations);
-        bundle.putIntArray(IDS, ids);
+        bundle.putIntArray(IDS,  ids);
         bundle.putInt(DRAGGING_INDEX, draggingIndex);
+        bundle.putInt(NEXT_ID, nextId);
         bundle.putString(PLAYER_ONE, playerOne);
         bundle.putString(PLAYER_TWO, playerTwo);
         bundle.putSerializable(STATE, state);
+        bundle.putBoolean(ORDER, player1First);
     }
 
     private void startSelectionActivity(){
