@@ -41,13 +41,29 @@ public class SelectionActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+
+
     public void imageClicked(View view){
         //Convert the view to an ImageView
+        //TextView textView = (TextView)findViewById(R.id.Message);
+        //textView.setText(getIntent().getExtras().getString("PLAYER"));
+
         ImageView imageView = (ImageView)view;
         //Get the contentDescription from the image
         String imageContentDescription = imageView.getContentDescription().toString();
         //Using that content description compare it to the strings.xml values
-
         //Create the intent
         Intent result = new Intent(this, GameActivity.class);
         if(imageContentDescription.equals(getString(R.string.robin))){

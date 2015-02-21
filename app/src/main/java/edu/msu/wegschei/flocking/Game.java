@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * class to describe a Game
  */
-public class  Game {
+public class Game extends Activity{
 
     /**
      * Paint for filling the area the game is in
@@ -75,7 +75,7 @@ public class  Game {
     /**
      * The view of the game
      */
-    private View parentView = null;
+    //private View parentView = null;
     private Context parentContext = null;
 
     /**
@@ -104,13 +104,6 @@ public class  Game {
     final static float OSTRICH_RATIO = 1.5f;
 
     /**
-     * BirdIDs from the Selection Activity
-     * May or may not need these depending on how you want to handle the IDs
-     */
-    private int firstBirdID = -1;
-    private int secondBirdID = -1;
-
-    /**
      * The name of the bundle keys to save the puzzle
      */
     private final static String LOCATIONS = "Game.locations";
@@ -128,7 +121,7 @@ public class  Game {
         PLAYER_ONE_PLACING, PLAYER_TWO_PLACING
     }
 
-    private State state = State.START;
+    private State state = State.PLAYER_ONE_SELECTING;
     private boolean player1First = true;
 
     /**
@@ -140,7 +133,7 @@ public class  Game {
     public Game(Context context, View parent) {
 
         parentContext = context;
-        parentView = parent;
+        //parentView = parent;
 
         // Create paint for filling the area the puzzle will
         // be solved in.
@@ -158,6 +151,10 @@ public class  Game {
     }
 
     public void draw(Canvas canvas) {
+
+        //java.lang.NullPointerException
+        //  at edu.msu.wegschei.flocking.Game.draw(Game.java:185)
+        //  at edu.msu.wegschei.flocking.GameView.onDraw(GameView.java:44)
 
         int wid = canvas.getWidth();
         int hit = canvas.getHeight();
@@ -184,6 +181,7 @@ public class  Game {
         scaleFactor = (float)gameSize / (float)ostrich.getHeight() / OSTRICH_RATIO;
 
         for(Bird bird : birds) {
+            //crashes here on any rotation!!!!!!
             bird.draw(canvas, marginX, marginY, gameSize, scaleFactor);
         }
     }
@@ -305,23 +303,23 @@ public class  Game {
         bundle.putBoolean(ORDER, player1First);
     }
 
-    private void startSelectionActivity(){
-        Intent intent = new Intent(parentContext, SelectionActivity.class);
-        ((Activity)parentContext).startActivityForResult(intent, 1);
-    }
+//    private void startSelectionActivity(String playerName){
+//        //
+//        //intent.putExtra("PLAYER", playerName);
+//        //((Activity)parentContext).startActivityForResult(intent, 1);
+//    }
 
     public void advanceGame(int birdID) {
         switch (state) {
-            case START:
-                state = State.PLAYER_ONE_SELECTING;
-                startSelectionActivity();
-                break;
-
+//            case START:
+//                state = State.PLAYER_ONE_SELECTING;
+//                startSelectionActivity(playerOne);
+//                break;
             case PLAYER_ONE_SELECTING:
                 if(player1First) {
                     state = State.PLAYER_TWO_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity();
+                    //startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_TWO_PLACING;
                     dragging = next;
@@ -339,7 +337,7 @@ public class  Game {
                 } else {
                     state = State.PLAYER_ONE_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity();
+                    //startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -353,7 +351,7 @@ public class  Game {
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_ONE_SELECTING;
-                    startSelectionActivity();
+                    //startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -362,7 +360,7 @@ public class  Game {
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_TWO_SELECTING;
-                    startSelectionActivity();
+                    //startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_ONE_PLACING;
                     dragging = next;

@@ -22,11 +22,20 @@ public class GameActivity extends ActionBarActivity {
 
     private String playerNameOne;
     private String playerNameTwo;
+    private int Players = 2;
+    private int counter = 0;
+
+    private View myView;
+    private View ToggleButtonPLACE;
+    private View ToggleButtonSELECT;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_game);
+        ToggleButtonPLACE = findViewById(R.id.buttonPlace);
+        ToggleButtonSELECT = findViewById(R.id.GetBird);
+        ToggleButtonPLACE.setVisibility(View.GONE);
 
         gameView = (GameView)this.findViewById(R.id.gameView);
 
@@ -38,10 +47,10 @@ public class GameActivity extends ActionBarActivity {
 
         if(bundle != null) {
             gameView.loadInstanceState(bundle);
-        } else {
-            gameView.advanceGame(-1);
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,34 +76,47 @@ public class GameActivity extends ActionBarActivity {
 
     public void onPlace(View view) {
         gameView.onPlace();
+        counter--;
+        if(counter < 0){
+            ToggleButtonPLACE.setVisibility(View.GONE);
+            ToggleButtonSELECT.setVisibility(View.VISIBLE);
+            counter = 0;
+        }
         gameView.invalidate();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-
         gameView.saveInstanceState(bundle);
     }
-
-    /**
-     * this never actually fires...it wanted to say hi for a bit
-     */
-//    public void getUserBirds(){
-//        int birdID1 = 1;
-//        Intent intent1 = new Intent(this, SelectionActivity.class);
-//        startActivityForResult(intent1,birdID1);
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == BIRD_SELECTION && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
             int birdID = extras.getInt("BirdImageID");
-            gameView.advanceGame(birdID);
+            if(counter == Players - 1 ){
+                gameView.advanceGame(birdID);
+                ToggleButtonSELECT.setVisibility(View.GONE); //turn off select
+                ToggleButtonPLACE.setVisibility(View.VISIBLE); //turn on PLACE
+                gameView.invalidate();
+            } else if(counter < Players){
+                gameView.advanceGame(birdID);
+                //Turn this back on if you want them to be called one after another
+                //Turned it off for better testing...
+                //State machine does work though, so that's nice.
+                //chooseBird(myView);
+                counter++;
+            }
+
         }
     }
 
+    public void chooseBird(View view){
+        myView = view;
+        Intent intent = new Intent(this, SelectionActivity.class);
+        startActivityForResult(intent, 1);
+    }
 }
