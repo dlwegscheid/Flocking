@@ -27,11 +27,16 @@ public class GameActivity extends ActionBarActivity {
     private int counter = 0;
 
     private View myView;
+    private View ToggleButtonPLACE;
+    private View ToggleButtonSELECT;
 
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_game);
+        ToggleButtonPLACE = findViewById(R.id.buttonPlace);
+        ToggleButtonSELECT = findViewById(R.id.GetBird);
+        ToggleButtonPLACE.setVisibility(View.GONE);
 
         gameView = (GameView)this.findViewById(R.id.gameView);
 
@@ -43,9 +48,7 @@ public class GameActivity extends ActionBarActivity {
 
         if(bundle != null) {
             gameView.loadInstanceState(bundle);
-        } // else {
-//            gameView.advanceGame(-1);
-//        }
+        }
     }
 
 
@@ -74,6 +77,12 @@ public class GameActivity extends ActionBarActivity {
 
     public void onPlace(View view) {
         gameView.onPlace();
+        counter--;
+        if(counter < 0){
+            ToggleButtonPLACE.setVisibility(View.GONE);
+            ToggleButtonSELECT.setVisibility(View.VISIBLE);
+            counter = 0;
+        }
         gameView.invalidate();
     }
 
@@ -89,21 +98,23 @@ public class GameActivity extends ActionBarActivity {
         if(requestCode == BIRD_SELECTION && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
             int birdID = extras.getInt("BirdImageID");
-            gameView.advanceGame(birdID);
-            if(counter < Players){
+            if(counter == Players - 1 ){
+                gameView.advanceGame(birdID);
+                ToggleButtonSELECT.setVisibility(View.GONE); //turn off select
+                ToggleButtonPLACE.setVisibility(View.VISIBLE); //turn on PLACE
+                gameView.invalidate();
+            } else if(counter < Players){
+                gameView.advanceGame(birdID);
                 chooseBird(myView);
                 counter++;
-            } else {
-                counter = 0;
             }
+
         }
     }
 
     public void chooseBird(View view){
         myView = view;
         Intent intent = new Intent(this, SelectionActivity.class);
-        int PLAYERS = 2;
-        intent.putExtra("CALL_IT", PLAYERS);
         startActivityForResult(intent, 1);
     }
 }
