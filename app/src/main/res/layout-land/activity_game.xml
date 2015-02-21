@@ -38,6 +38,15 @@
             android:layout_centerHorizontal="true"
             android:onClick="onPlace" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selectBird"
+            android:id="@+id/selectBird"
+            android:layout_below="@+id/buttonPlace"
+            android:layout_centerHorizontal="true"
+            android:onClick="chooseBird" />
+
     </RelativeLayout>
 
 </LinearLayout>

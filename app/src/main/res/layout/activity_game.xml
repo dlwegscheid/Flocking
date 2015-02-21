@@ -33,8 +33,17 @@
             android:layout_height="wrap_content"
             android:text="@string/place_button"
             android:id="@+id/buttonPlace"
-            android:layout_gravity="center"
+            android:layout_gravity="left|center_vertical"
             android:onClick="onPlace" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selectBird"
+            android:id="@+id/GetBird"
+            android:layout_gravity="right|center_vertical"
+            android:onClick="chooseBird"
+            android:clickable="true" />
     </FrameLayout>
 
 </LinearLayout>

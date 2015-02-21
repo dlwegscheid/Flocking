@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class GameActivity extends ActionBarActivity {
 
@@ -22,6 +23,10 @@ public class GameActivity extends ActionBarActivity {
 
     private String playerNameOne;
     private String playerNameTwo;
+    private int Players = 2;
+    private int counter = 0;
+
+    private View myView;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -38,10 +43,12 @@ public class GameActivity extends ActionBarActivity {
 
         if(bundle != null) {
             gameView.loadInstanceState(bundle);
-        } else {
-            gameView.advanceGame(-1);
-        }
+        } // else {
+//            gameView.advanceGame(-1);
+//        }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,28 +80,30 @@ public class GameActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-
         gameView.saveInstanceState(bundle);
     }
-
-    /**
-     * this never actually fires...it wanted to say hi for a bit
-     */
-//    public void getUserBirds(){
-//        int birdID1 = 1;
-//        Intent intent1 = new Intent(this, SelectionActivity.class);
-//        startActivityForResult(intent1,birdID1);
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-
         if(requestCode == BIRD_SELECTION && resultCode == Activity.RESULT_OK){
             Bundle extras = data.getExtras();
             int birdID = extras.getInt("BirdImageID");
             gameView.advanceGame(birdID);
+            if(counter < Players){
+                chooseBird(myView);
+                counter++;
+            } else {
+                counter = 0;
+            }
         }
     }
 
+    public void chooseBird(View view){
+        myView = view;
+        Intent intent = new Intent(this, SelectionActivity.class);
+        int PLAYERS = 2;
+        intent.putExtra("CALL_IT", PLAYERS);
+        startActivityForResult(intent, 1);
+    }
 }

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * class to describe a Game
  */
-public class  Game {
+public class Game extends Activity{
 
     /**
      * Paint for filling the area the game is in
@@ -126,7 +126,7 @@ public class  Game {
         PLAYER_ONE_PLACING, PLAYER_TWO_PLACING
     }
 
-    private State state = State.START;
+    private State state = State.PLAYER_ONE_SELECTING;
     private boolean player1First = true;
 
     /**
@@ -287,23 +287,23 @@ public class  Game {
         bundle.putSerializable(STATE, state);
     }
 
-    private void startSelectionActivity(){
-        Intent intent = new Intent(parentContext, SelectionActivity.class);
-        ((Activity)parentContext).startActivityForResult(intent, 1);
+    private void startSelectionActivity(String playerName){
+        //
+        //intent.putExtra("PLAYER", playerName);
+        //((Activity)parentContext).startActivityForResult(intent, 1);
     }
 
     public void advanceGame(int birdID) {
         switch (state) {
-            case START:
-                state = State.PLAYER_ONE_SELECTING;
-                startSelectionActivity();
-                break;
-
+//            case START:
+//                state = State.PLAYER_ONE_SELECTING;
+//                startSelectionActivity(playerOne);
+//                break;
             case PLAYER_ONE_SELECTING:
                 if(player1First) {
                     state = State.PLAYER_TWO_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity();
+                    startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_TWO_PLACING;
                     dragging = next;
@@ -321,7 +321,7 @@ public class  Game {
                 } else {
                     state = State.PLAYER_ONE_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity();
+                    startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -335,7 +335,7 @@ public class  Game {
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_ONE_SELECTING;
-                    startSelectionActivity();
+                    startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -344,7 +344,7 @@ public class  Game {
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_TWO_SELECTING;
-                    startSelectionActivity();
+                    startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_ONE_PLACING;
                     dragging = next;
