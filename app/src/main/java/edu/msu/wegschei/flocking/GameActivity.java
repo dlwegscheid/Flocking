@@ -77,15 +77,6 @@ public class GameActivity extends ActionBarActivity {
         gameView.saveInstanceState(bundle);
     }
 
-    /**
-     * this never actually fires...it wanted to say hi for a bit
-     */
-//    public void getUserBirds(){
-//        int birdID1 = 1;
-//        Intent intent1 = new Intent(this, SelectionActivity.class);
-//        startActivityForResult(intent1,birdID1);
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);

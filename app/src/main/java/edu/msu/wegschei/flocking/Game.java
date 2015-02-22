@@ -305,8 +305,9 @@ public class  Game {
         bundle.putBoolean(ORDER, player1First);
     }
 
-    private void startSelectionActivity(){
+    private void startSelectionActivity(String name){
         Intent intent = new Intent(parentContext, SelectionActivity.class);
+        intent.putExtra("PLAYER_NAME", name);
         ((Activity)parentContext).startActivityForResult(intent, 1);
     }
 
@@ -314,14 +315,14 @@ public class  Game {
         switch (state) {
             case START:
                 state = State.PLAYER_ONE_SELECTING;
-                startSelectionActivity();
+                startSelectionActivity(playerOne);
                 break;
 
             case PLAYER_ONE_SELECTING:
                 if(player1First) {
                     state = State.PLAYER_TWO_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity();
+                    startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_TWO_PLACING;
                     dragging = next;
@@ -339,7 +340,7 @@ public class  Game {
                 } else {
                     state = State.PLAYER_ONE_SELECTING;
                     next = new Bird(parentContext, birdID);
-                    startSelectionActivity();
+                    startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -353,7 +354,7 @@ public class  Game {
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_ONE_SELECTING;
-                    startSelectionActivity();
+                    startSelectionActivity(playerOne);
                 }
                 break;
 
@@ -362,7 +363,7 @@ public class  Game {
                     dragging = null;
                     player1First = !player1First;
                     state = State.PLAYER_TWO_SELECTING;
-                    startSelectionActivity();
+                    startSelectionActivity(playerTwo);
                 } else {
                     state = State.PLAYER_ONE_PLACING;
                     dragging = next;
