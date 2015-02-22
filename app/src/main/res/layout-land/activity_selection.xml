@@ -22,16 +22,18 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
-            android:layout_weight=".75"
+            android:layout_weight="1"
             android:baselineAligned="false"
-            android:id="@+id/BananaSwallow">
+            android:id="@+id/BananaSwallow"
+            android:layout_margin="10dp">
 
             <FrameLayout
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/Swallow"
-                android:layout_weight="1"
-                android:layout_margin="10dp">
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -40,7 +42,6 @@
                     android:text="@string/swallow"
                     android:id="@+id/SwallowText"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="25dp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -59,8 +60,9 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/Bananaquit"
-                android:layout_weight="1"
-                android:layout_margin="10dp">
+                android:layout_marginLeft="15dp"
+                android:padding="10dp"
+                android:layout_weight="1">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -69,7 +71,6 @@
                     android:text="@string/bananaquit"
                     android:id="@+id/BananaText"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="25dp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -89,18 +90,18 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/Robin"
-                android:layout_weight="1"
-                android:layout_margin="10dp">
+                android:padding="10dp"
+                android:layout_weight="1">
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/robin"
                     android:id="@+id/RobinText"
                     android:textStyle="bold"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="25dp" />
+                    android:layout_marginLeft="15dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -118,8 +119,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="0dp"
                 android:id="@+id/Parrot"
-                android:layout_weight="1"
-                android:layout_margin="10dp">
+                android:padding="10dp"
+                android:layout_weight="2">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -132,7 +133,7 @@
                     android:clickable="true" />
 
                 <TextView
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/ParrotText"
@@ -140,45 +141,40 @@
                     android:gravity="center_vertical|center_horizontal|left"
                     android:text="@string/parrot"
                     android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="25dp" />
+                    android:layout_margin="15dp" />
             </FrameLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:id="@+id/Ostrich"
             android:layout_margin="10dp"
             android:visibility="visible"
-            android:layout_weight=".75">
+            android:layout_weight="1">
 
-            <FrameLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/ostrich"
+                android:id="@+id/OstrichText"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal|top" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/ostrich"
-                    android:id="@+id/OstrichText"
-                    android:textStyle="bold"
-                    android:layout_gravity="center_horizontal|top" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ostrich"
+                android:src="@drawable/ostrich"
+                android:contentDescription="@string/ostrich"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:onClick="imageClicked"
+                android:clickable="true" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ostrich"
-                    android:src="@drawable/ostrich"
-                    android:contentDescription="@string/ostrich"
-                    android:layout_gravity="center"
-                    android:layout_margin="15dp"
-                    android:onClick="imageClicked"
-                    android:clickable="true" />
-            </FrameLayout>
-
-        </LinearLayout>
+        </FrameLayout>
 
     </LinearLayout>
 
