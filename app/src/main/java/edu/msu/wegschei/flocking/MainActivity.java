@@ -1,5 +1,6 @@
 package edu.msu.wegschei.flocking;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -31,7 +32,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
     public void loadInstanceState(Bundle bundle) {
         String nameOne = bundle.getString(PLAYER_ONE);
         String nameTwo = bundle.getString(PLAYER_TWO);
@@ -59,17 +59,23 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        switch (item.getItemId()) {
+            case R.id.menu_rules:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+                // Parameterize the builder
+                builder.setTitle(R.string.rules);
+                builder.setMessage(R.string.rules_text);
+                builder.setPositiveButton(android.R.string.ok, null);
+
+                // Create the dialog box and show it
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void onStartGame(View view){

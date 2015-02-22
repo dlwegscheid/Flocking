@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,9 +20,14 @@ public class GameActivity extends ActionBarActivity {
      */
     private GameView gameView;
     private TextView textView;
+    private Button placeButton;
 
     public final static String PLAYER_ONE = "GameActivity.playerOne";
     public final static String PLAYER_TWO = "GameActivity.playerTwo";
+    public final static String ORDER = "GameActivity.order";
+    public final static String COUNTER = "GameActivity.counter";
+    public final static String MESSAGE_TEXT = "GameActivity.messageText";
+    public final static String BUTTON_TEXT = "GameActivity.buttonText";
 
     private final static int BIRD_SELECTION = 1;
 
@@ -36,9 +42,8 @@ public class GameActivity extends ActionBarActivity {
         setContentView(R.layout.activity_game);
 
         gameView = (GameView)this.findViewById(R.id.gameView);
-
+        placeButton = (Button) findViewById(R.id.buttonPlace);
         textView = (TextView)findViewById(R.id.textPlayer);
-
 
         //Gets the players' names that came from MainActivity, stores them in variables here
         Bundle extras = getIntent().getExtras();
@@ -78,32 +83,50 @@ public class GameActivity extends ActionBarActivity {
     }
 
     public void onPlace(View view) {
-        counter--;
-        gameView.onPlace();
-        if(counter == 1){
-            textView.setText(players.get(counter) + ": place your bird!");
-            view.invalidate();
-        }
-        gameView.invalidate();
-        if(counter == 0){
-            Collections.reverse(players);
+        Game.State originalState = gameView.getState();
+        if(originalState == Game.State.PLAYER_ONE_WON || originalState == Game.State.PLAYER_TWO_WON) {
+            gameView.end();
+        } else {
+            counter--;
+            gameView.onPlace();
+
+            if (counter == 1) {
+                textView.setText(players.get(counter) + ": Place your bird!");
+                view.invalidate();
+            }
+            gameView.invalidate();
+
+            if (counter == 0) {
+                Collections.reverse(players);
+            }
+
+            Game.State newState = gameView.getState();
+            if(newState ==  Game.State.PLAYER_ONE_WON) {
+                textView.setText(playerNameOne + " wins!");
+                placeButton.setText("Continue");
+            } else if (newState ==  Game.State.PLAYER_TWO_WON) {
+                textView.setText(playerNameTwo + " wins!");
+                placeButton.setText("Continue");
+            }
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle bundle) {
-        bundle.putString("MESSAGE_TEXT", textView.getText().toString());
-        bundle.putStringArrayList("ORDER", players);
-        bundle.putInt("COUNTER", counter);
+        bundle.putString(MESSAGE_TEXT, textView.getText().toString());
+        bundle.putString(BUTTON_TEXT, placeButton.getText().toString());
+        bundle.putStringArrayList(ORDER, players);
+        bundle.putInt(COUNTER, counter);
         super.onSaveInstanceState(bundle);
         gameView.saveInstanceState(bundle);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        textView.setText(savedInstanceState.getString("MESSAGE_TEXT"));
-        players = savedInstanceState.getStringArrayList("ORDER");
-        counter = savedInstanceState.getInt("COUNTER");
+        textView.setText(savedInstanceState.getString(MESSAGE_TEXT));
+        placeButton.setText(savedInstanceState.getString(BUTTON_TEXT));
+        players = savedInstanceState.getStringArrayList(ORDER);
+        counter = savedInstanceState.getInt(COUNTER);
         super.onRestoreInstanceState(savedInstanceState);
     }
 
@@ -116,7 +139,7 @@ public class GameActivity extends ActionBarActivity {
             int birdID = extras.getInt("BirdImageID");
             counter++;
             if(counter == 2){
-                textView.setText(players.get(0) + " : place your bird!");
+                textView.setText(players.get(0) + ": Place your bird!");
             }
             gameView.advanceGame(birdID);
         }

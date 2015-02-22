@@ -74,4 +74,8 @@ public class GameView extends View {
     public void advanceGame(int birdID) { game.advanceGame(birdID); }
 
     public void setNames(String p1, String p2) {game.setNames(p1,p2); }
+
+    public Game.State getState() {return game.getState();}
+
+    public void end() {game.end();}
 }

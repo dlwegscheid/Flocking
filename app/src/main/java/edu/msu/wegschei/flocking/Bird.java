@@ -28,12 +28,12 @@ public class Bird {
     /**
      * x location in pixels
      */
-    private float x = 0;
+    private float x = 0.5f;
 
     /**
      * y location in pixels
      */
-    private float y = 0;
+    private float y = 0.5f;
 
     /**
      * dimensions from the canvas for collision testing

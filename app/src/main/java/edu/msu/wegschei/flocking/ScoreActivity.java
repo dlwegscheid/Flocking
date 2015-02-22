@@ -34,7 +34,6 @@ public class ScoreActivity extends ActionBarActivity {
         winner = extras.getString(WINNER);
         birdsPlaced = extras.getInt(SCORE);
 
-
         textWinner = (TextView)findViewById(R.id.textWinner);
         textWinner.setText(winner);
 

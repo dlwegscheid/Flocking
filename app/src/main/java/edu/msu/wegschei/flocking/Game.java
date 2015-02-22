@@ -122,10 +122,11 @@ public class  Game {
     private final static String STATE = "Game.state";
     private final static String ORDER = "Game.order";
 
-    private enum State {
+    public enum State {
         START,
         PLAYER_ONE_SELECTING, PLAYER_TWO_SELECTING,
-        PLAYER_ONE_PLACING, PLAYER_TWO_PLACING
+        PLAYER_ONE_PLACING, PLAYER_TWO_PLACING,
+        PLAYER_ONE_WON, PLAYER_TWO_WON,
     }
 
     private State state = State.START;
@@ -385,12 +386,24 @@ public class  Game {
 
         switch (state) {
             case PLAYER_ONE_PLACING:
-                intent.putExtra("ScoreActivity.winner", playerTwo + " Wins!");
+                state = State.PLAYER_TWO_WON;
+            case PLAYER_TWO_WON:
+                intent.putExtra("ScoreActivity.winner", playerTwo + " wins!");
                 break;
+
             case PLAYER_TWO_PLACING:
-                intent.putExtra("ScoreActivity.winner", playerOne + " Wins!");
+                state = State.PLAYER_ONE_WON;
+            case PLAYER_ONE_WON:
+                intent.putExtra("ScoreActivity.winner", playerOne + " wins!");
                 break;
         }
-            parentContext.startActivity(intent);
+        parentContext.startActivity(intent);
+
+        dragging = null;
+        next = null;
+    }
+
+    public State getState() {
+        return state;
     }
 }

@@ -23,7 +23,7 @@ public class SelectionActivity extends ActionBarActivity {
         if(intent != null){
             TextView textView = (TextView)findViewById(R.id.Message);
             NAME = intent.getStringExtra("PLAYER_NAME");
-            String newMessage = NAME + ": Please click your bird";
+            String newMessage = NAME + ": Please select your bird";
             textView.setText(newMessage);
         }
     }
