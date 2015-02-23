@@ -32,6 +32,7 @@
                 android:layout_height="0dp"
                 android:id="@+id/Swallow"
                 android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:padding="10dp"
                 android:layout_weight="1">
 
@@ -41,7 +42,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/swallow"
                     android:id="@+id/SwallowText"
-                    android:layout_gravity="left|center_vertical"
+                    android:layout_gravity="start|center_vertical"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -50,7 +51,7 @@
                     android:id="@+id/swallow"
                     android:src="@drawable/swallow"
                     android:contentDescription="@string/swallow"
-                    android:layout_gravity="right|center_vertical"
+                    android:layout_gravity="end|center_vertical"
                     android:onClick="imageClicked"
                     android:clickable="true" />
 
@@ -61,6 +62,7 @@
                 android:layout_height="0dp"
                 android:id="@+id/Bananaquit"
                 android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp"
                 android:padding="10dp"
                 android:layout_weight="1">
 
@@ -70,7 +72,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/bananaquit"
                     android:id="@+id/BananaText"
-                    android:layout_gravity="left|center_vertical"
+                    android:layout_gravity="start|center_vertical"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -79,8 +81,9 @@
                     android:id="@+id/banana"
                     android:src="@drawable/bananaquit"
                     android:contentDescription="@string/bananaquit"
-                    android:layout_gravity="right|center_vertical"
+                    android:layout_gravity="end|center_vertical"
                     android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:onClick="imageClicked"
                     android:clickable="true" />
 
@@ -100,8 +103,9 @@
                     android:text="@string/robin"
                     android:id="@+id/RobinText"
                     android:textStyle="bold"
-                    android:layout_gravity="left|center_vertical"
-                    android:layout_marginLeft="15dp" />
+                    android:layout_gravity="start|center_vertical"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginStart="15dp" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -109,8 +113,9 @@
                     android:id="@+id/robin"
                     android:src="@drawable/robin"
                     android:contentDescription="@string/robin"
-                    android:layout_gravity="right|center_vertical"
+                    android:layout_gravity="end|center_vertical"
                     android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp"
                     android:onClick="imageClicked"
                     android:clickable="true" />
             </FrameLayout>
@@ -128,7 +133,7 @@
                     android:id="@+id/parrot"
                     android:src="@drawable/parrot"
                     android:contentDescription="@string/parrot"
-                    android:layout_gravity="right|center_vertical"
+                    android:layout_gravity="end|center_vertical"
                     android:onClick="imageClicked"
                     android:clickable="true" />
 
@@ -138,9 +143,9 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/ParrotText"
                     android:textStyle="bold"
-                    android:gravity="center_vertical|center_horizontal|left"
+                    android:gravity="center_vertical|center_horizontal|start"
                     android:text="@string/parrot"
-                    android:layout_gravity="left|center_vertical"
+                    android:layout_gravity="start|center_vertical"
                     android:layout_margin="15dp" />
             </FrameLayout>
         </LinearLayout>

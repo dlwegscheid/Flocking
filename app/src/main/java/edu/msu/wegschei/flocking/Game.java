@@ -40,11 +40,6 @@ public class  Game {
     private int gameSize;
 
     /**
-     * How much we scale the bird pieces
-     */
-    private float scaleFactor;
-
-    /**
      * Left margin in pixels
      */
     private int marginX;
@@ -75,7 +70,6 @@ public class  Game {
     /**
      * The view of the game
      */
-    private View parentView = null;
     private Context parentContext = null;
 
     /**
@@ -102,13 +96,6 @@ public class  Game {
      * Ratio of board height to ostrich height
      */
     final static float OSTRICH_RATIO = 1.5f;
-
-    /**
-     * BirdIDs from the Selection Activity
-     * May or may not need these depending on how you want to handle the IDs
-     */
-    private int firstBirdID = -1;
-    private int secondBirdID = -1;
 
     /**
      * The name of the bundle keys to save the puzzle
@@ -139,9 +126,7 @@ public class  Game {
     private String playerTwo;
 
     public Game(Context context, View parent) {
-
         parentContext = context;
-        parentView = parent;
 
         // Create paint for filling the area the puzzle will
         // be solved in.
@@ -159,6 +144,7 @@ public class  Game {
     }
 
     public void draw(Canvas canvas) {
+        float scaleFactor;
 
         int wid = canvas.getWidth();
         int hit = canvas.getHeight();
