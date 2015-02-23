@@ -21,14 +21,16 @@
     <string name="reset">Reset</string>
     <string name="rules">Rules</string>
     <string name="display_rules">Display Rules</string>
-    <string name="rules_text">To begin the game, the device will present a bird selection screen for the first player.
-While holding the device so the other player cannot see, she will select a bird from 5 different birds.
-When the bird is selected, the process repeats for the second player. They, too, select a bird.
-On the next screen, there is a square view where game play occurs.
-The first player\'s bird appears in the middle of that square. The player can then move the bird.
-When the player is happy with the bird location, they click the place button.
-At this point, if the bird is overlapping any other bird or extends outside the playing space, the player loses and the game is over.
-If the player successfully places the bird, the second players bird appears and he moves it to place, then clicks the button. Again, the game tests to see if this bird is overlapping any other bird or extends outside the playing space. If it does, the player loses and the game is over.
-This ends a round. For the second round, the birds from the first round are still on the screen and the order the players go in reverse.</string>
+    <string name="rules_text">\t\tPlease enter both players\' names into the text fields and then press \'Prepare your flapper\'.\n\n\t\t
+       The game will then present a bird selection screen for the first player.
+        While holding the device so the other player cannot see, player one will select a bird from 5 different birds given.
+        When the bird is selected, the process repeats for player two. They, too, select a bird.\n\n\t\t
+       On the next screen, there is a square view where game play occurs.
+        Player one\'s bird will appear in the middle of that square. They can then move the bird.
+        Once the player is happy with the bird location, click the place button.
+        At this point, if the bird is overlapping any other bird or extends outside the playing space, that player loses and the game is over.\n\n\t\t
+       If the player successfully placed the bird, the second players\' bird appears and they can move it into place, then clicks the button. Again, the game tests to see if this bird is overlapping any other bird or extends outside the square.
+        If it does, this player loses and the game is over.
+        This ends a round.\n\n\t\tFor the next round, the birds from the first round are still on the screen and the order the players go in reverse.</string>
 
 </resources>
